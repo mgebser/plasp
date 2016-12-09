@@ -21,12 +21,13 @@ file(GLOB input_headers "../include/plasp/input/*.h")
 file(GLOB output_sources "plasp/output/*.cpp")
 file(GLOB output_headers "../include/plasp/output/*.h")
 
-include_directories(
-	${Boost_INCLUDE_DIRS}
-)
+file(GLOB utils_sources "plasp/utils/*.cpp")
+file(GLOB utils_headers "../include/plasp/utils/*.h")
 
-include_directories(
+set(includes
+	${Boost_INCLUDE_DIRS}
 	${PROJECT_SOURCE_DIR}/include
+	${PROJECT_SOURCE_DIR}/lib/cpp17_headers/include
 )
 
 set(sources
@@ -50,6 +51,9 @@ set(sources
 
 	${output_sources}
 	${output_headers}
+
+	${utils_sources}
+	${utils_headers}
 )
 
 set(libraries
@@ -58,4 +62,5 @@ set(libraries
 )
 
 add_library(${target} ${sources})
+target_include_directories(${target} PRIVATE ${includes})
 target_link_libraries(${target} ${libraries})
